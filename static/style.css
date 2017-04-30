@@ -1,0 +1,29 @@
+#header{
+    height:15%;
+}
+#map {
+    height: 80%;
+    width: 100%;
+    /*float: right;*/
+}
+#title{
+    float: left;
+    margin: 10px;
+    padding-left: 10px;
+}
+#search{
+    float: right;
+    padding: 5px;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+
+#title{
+    color: whitesmoke;
+    font-size: 15px;
+}
+
+.new-tweet{
+    color: #333333;
+    background-color: beige;
+}
