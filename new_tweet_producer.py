@@ -39,8 +39,8 @@ class Producer(threading.Thread):
     daemon = True
 
     def run(self):
-        producer = KafkaProducer(bootstrap_servers='http://52.23.192.153:9029', api_version=(0,10))
-        print(producer.metrics())
+        producer = KafkaProducer(bootstrap_servers='52.87.152.11:9092', api_version=(0,10))
+        print('producer',producer.metrics())
         while True:
             print('sending msg')
             producer.send('newtweet', b"test")
@@ -52,17 +52,17 @@ class Consumer(threading.Thread):
     daemon = True
 
     def run(self):
-        consumer = KafkaConsumer(bootstrap_servers='http://52.23.192.153:9029', api_version=(0,10),
+        consumer = KafkaConsumer(bootstrap_servers=['52.87.152.11:9092'], api_version=(0,10),
                                  auto_offset_reset='earliest')
         consumer.subscribe(['newtweet'])
-
+        print('consumer',consumer.metrics())
         for message in consumer:
             print ("msg:", message)
 
 
 def main():
     threads = [
-        Producer(),
+        # Producer(),
         Consumer()
     ]
 

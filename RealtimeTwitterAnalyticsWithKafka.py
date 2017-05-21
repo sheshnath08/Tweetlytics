@@ -40,7 +40,7 @@ def hello_world():
     global thread
     if thread is None:
         thread = Thread(target=stream_tweets_background())
-    thread.start()
+        thread.start()
 
     return render_template('index.html')
 
