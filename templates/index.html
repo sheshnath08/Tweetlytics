@@ -39,9 +39,21 @@
     });
 
     socket.on('tweetcount', function(msg) {
-        $('#count').html('<div class="panel panel-default">' +
-                '<div class="panel-body count-body">'+ msg +
-                '</div> </div>');
+        $('#count').html('<h2 class="announcement-text">'+ msg +
+                '</h2>');
+    });
+
+    socket.on('hashtags', function(msg) {
+        var JsonObject= JSON.parse(msg);
+        $('#trending').html('<div class="announcement-text" id="hashtag"></div>');
+
+        for(var key in JsonObject){
+            $('#hashtag').append('<h4>' +
+                key + ' '+ JsonObject[key]+
+                '</h4>');
+        };
+
+
     });
         function disconnect() {
                         socket.emit('disconnected');
@@ -51,11 +63,69 @@
 </head>
 <body class="container" onunload=disconnect()>
     <div class = "row">
+        <div class="col-md-6">
                 <h2>Real-Time Tweet Analytics</h2>
-        <div id="count">100</div>
+        </div>
+        <div class="col-md-3">
+	    <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="row text-center">
+                <h2 class="announcement-heading" id = "count">200</h2>
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row text-center">
+                  Tweets Analyzed
+              </div>
+            </div>
+          </a>
+        </div>
+	</div>
     </div>
     <div class="row" id="tweets">
 
     </div>
+
+    <!--<div id="trending" class="row trending-body">-->
+        <!--<div class="panel panel-default">-->
+            <!--<div class="panel-body"> Trending Hashtags</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<div class="row">
+
+
+<div class="col-md-3">
+	    <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row text-center" id = 'trending'>
+                <!--<p class="announcement-heading" id = "hashtag">100000</p>-->
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row text-center">
+                  Trending Hashtags
+              </div>
+            </div>
+          </a>
+        </div>
+	</div>
+
+
+	<!--<div class="col-md-6">-->
+
+	    <!--<h3>Live Tweet Feed</h3>-->
+
+	    <!--<table class="table table-condensed table-bordered table-hover small">-->
+            <!--<h2>Tweets Here</h2>-->
+	    <!--</table>-->
+
+    <!--</div>-->
+
+
+</div>
+
 </body>
 </html>

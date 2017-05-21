@@ -11,9 +11,13 @@ class TweetStream(tweepy.StreamListener):
         try:
             tweets_json = json.loads(raw_data, encoding='utf-8')
             self.producer.send_tweet('newtweet', tweets_json['text'])
+            if ('coordinates' in tweets_json):
+                if tweets_json["coordinates"] is not None:
+                    self.producer.send_tweet('location', tweets_json["coordinates"])
         except:
-            traceback.print_exc()
-            print('error', raw_data)
+            pass
+            # traceback.print_exc()
+            # print('error', raw_data)
 
     def on_error(self, status_code):
         if status_code==420:

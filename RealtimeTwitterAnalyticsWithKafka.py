@@ -1,12 +1,15 @@
 from threading import Thread
-from flask import Flask
+from flask import Flask, json
 from flask import render_template
 from flask import request
 import keys
 import tweepy
+
+from LocationConsumer import LocationConsumer
 from TweetStream import TweetStream
 from flask_socketio import SocketIO, disconnect
 from consumer import Consumer
+from TrendingHashtagConsumer import TrendingHashtagConsumer
 
 app = Flask(__name__)
 
@@ -37,11 +40,14 @@ def stream_tweets_background():
                         async=True)
 
 def start_stop_consumer(flag):
-    consumer = Consumer()
+    consumer = TrendingHashtagConsumer()
+    consumer1 = Consumer()
     if flag:
         consumer.start()
+        consumer1.start()
     else:
         consumer.stop()
+        consumer1.stop()
 
 
 @application.route('/', methods=['GET'])
@@ -52,7 +58,7 @@ def hello_world():
         thread.start()
         start_stop_consumer(True)
 
-    return render_template('index.html')
+    return render_template('newindex.html')
 
 @socketio.on('connected')
 def connected():
@@ -71,6 +77,14 @@ def tweet_count():
     data = str(request.get_data(), encoding='utf-8')
     socketio.emit('tweetcount',data)
     return 'home'
+
+@application.route('/trending-hashtag',methods=['POST'])
+def trend_count():
+    data = str(request.get_data(), encoding='utf-8')
+    json_data = json.loads(data)
+    socketio.emit('hashtags',json_data)
+    return 'home'
+
 
 @socketio.on('disconnected', namespace='/')
 def test_disconnect():
