@@ -32,6 +32,7 @@
 
 import threading, logging, time
 
+import requests
 from kafka import KafkaConsumer, KafkaProducer
 
 
@@ -53,11 +54,12 @@ class Consumer(threading.Thread):
 
     def run(self):
         consumer = KafkaConsumer(bootstrap_servers=['52.87.152.11:9092'], api_version=(0,10),
-                                 auto_offset_reset='earliest')
+                                 auto_offset_reset='earliest', enable_auto_commit=False, consumer_timeout_ms=60000)
         consumer.subscribe(['newtweet'])
-        print('consumer',consumer.metrics())
-        for message in consumer:
-            print ("msg:", message)
+        while(True):
+            for message in consumer:
+                requests.post('http://localhost:5000/notify', tweets_json['text'].encode())
+                print ("msg:", message)
 
 
 def main():

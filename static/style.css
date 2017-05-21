@@ -27,3 +27,23 @@
     color: #333333;
     background-color: beige;
 }
+
+#count{
+    width: 200px;
+    text-align: center;
+    color: #1e89ec;
+    float: right;
+    font-size: larger;
+}
+
+#tweets{
+    float: right;
+    width: 35%;
+    border-width: 1px;
+}
+
+.count-body{
+    padding: 15px;
+    font-size: larger;
+    background: #ff3c0080;
+    }

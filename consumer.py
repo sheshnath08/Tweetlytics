@@ -1,7 +1,21 @@
+import threading
+import requests
 from kafka import KafkaConsumer
 
-# To consume messages
-consumer = KafkaConsumer('test',bootstrap_servers=['ec2-52-23-192-153.compute-1.amazonaws.com'],api_version=(0,10,1))
+class Consumer(threading.Thread):
 
-for msg in consumer:
-    print(msg)
+    count = 0
+
+    def run(self):
+        consumer = KafkaConsumer(bootstrap_servers=['52.87.152.11:9092'], api_version=(0,10),
+                                 auto_offset_reset='earliest', enable_auto_commit=False, consumer_timeout_ms=60000)
+        consumer.subscribe(['newtweet'])
+        while(True):
+            for message in consumer:
+                self.count = self.count+1
+                requests.post('http://localhost:5000/tweet-count', data=str(self.count))#message.value)
+                requests.post('http://localhost:5000/notify', message.value)
+                print ("msg:", message)
+
+    def stop(self):
+        self._stop_event.set()

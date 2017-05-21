@@ -31,11 +31,17 @@
             });
 
     socket.on('newTweet', function(msg) {
-        debugger;
-        $('#tweets').append('<div class="panel panel-default">' +
+        console.log('tweet', msg);
+        $('#tweets').prepend('<div class="panel panel-default">' +
                 '<div class="panel-body">'+ msg +
                 '</div> </div>');
         console.log(msg);
+    });
+
+    socket.on('tweetcount', function(msg) {
+        $('#count').html('<div class="panel panel-default">' +
+                '<div class="panel-body count-body">'+ msg +
+                '</div> </div>');
     });
         function disconnect() {
                         socket.emit('disconnected');
@@ -46,6 +52,7 @@
 <body class="container" onunload=disconnect()>
     <div class = "row">
                 <h2>Real-Time Tweet Analytics</h2>
+        <div id="count">100</div>
     </div>
     <div class="row" id="tweets">
 

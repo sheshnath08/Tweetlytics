@@ -6,6 +6,7 @@ import keys
 import tweepy
 from TweetStream import TweetStream
 from flask_socketio import SocketIO, disconnect
+from consumer import Consumer
 
 app = Flask(__name__)
 
@@ -22,17 +23,25 @@ api = tweepy.API(oauth)
 application = Flask(__name__)
 socketio = SocketIO(application)
 
-
 thread = None
+
+count = 0
 
 def stream_tweets_background():
     """Get tweets from twitter"""
     tweet_listner = TweetStream()
-    tweet_stream = tweepy.Stream(auth=api.auth, listener=tweet_listner)
+    tweet_stream = tweepy.Stream(auth=api.auth, listener=tweet_listner, wait_on_rate_limit=True)
     tweet_stream.filter(languages=["en"],
                         track=['i', 'u', 'in', 'is', 'was', 'where', 'you', 'me', 'have', 'with', \
                                'buy', 'bought', 'product', 'india'],
                         async=True)
+
+def start_stop_consumer(flag):
+    consumer = Consumer()
+    if flag:
+        consumer.start()
+    else:
+        consumer.stop()
 
 
 @application.route('/', methods=['GET'])
@@ -41,6 +50,7 @@ def hello_world():
     if thread is None:
         thread = Thread(target=stream_tweets_background())
         thread.start()
+        start_stop_consumer(True)
 
     return render_template('index.html')
 
@@ -53,12 +63,21 @@ def notify():
     """This will send the new tweets to """
     data = str(request.get_data(), encoding='utf-8')
     socketio.emit('newTweet',data)
+    return 'home'
 
+
+@application.route('/tweet-count',methods=['POST'])
+def tweet_count():
+    data = str(request.get_data(), encoding='utf-8')
+    socketio.emit('tweetcount',data)
     return 'home'
 
 @socketio.on('disconnected', namespace='/')
 def test_disconnect():
+    start_stop_consumer(False)
     print('Client disconnected', request.sid)
+
+
 
 
 if __name__ == '__main__':
