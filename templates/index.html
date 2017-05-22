@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <title>Real-Time Tweet Analytics</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <!-- Latest compiled and minified CSS -->
@@ -14,16 +13,9 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-    </style>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script type="text/javascript" charset="utf-8">
+
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     socket.on('connect', function() {
@@ -31,11 +23,9 @@
             });
 
     socket.on('newTweet', function(msg) {
-        console.log('tweet', msg);
-        $('#tweets').prepend('<div class="panel panel-default">' +
+        $('#tweets').prepend(
                 '<div class="panel-body">'+ msg +
-                '</div> </div>');
-        console.log(msg);
+                '</div>');
     });
 
     socket.on('tweetcount', function(msg) {
@@ -49,7 +39,7 @@
 
         for(var key in JsonObject){
             $('#hashtag').append('<h4>' +
-                key + ' '+ JsonObject[key]+
+                JsonObject[key].key + ' '+ JsonObject[key].value+
                 '</h4>');
         };
 
@@ -61,71 +51,100 @@
     </script>
 
 </head>
-<body class="container" onunload=disconnect()>
-    <div class = "row">
-        <div class="col-md-6">
-                <h2>Real-Time Tweet Analytics</h2>
-        </div>
-        <div class="col-md-3">
-	    <div class="panel panel-info">
-          <div class="panel-heading">
-            <div class="row text-center">
-                <h2 class="announcement-heading" id = "count">200</h2>
-            </div>
-          </div>
-          <a href="#">
-            <div class="panel-footer announcement-bottom">
-              <div class="row text-center">
-                  Tweets Analyzed
-              </div>
-            </div>
-          </a>
-        </div>
-	</div>
-    </div>
-    <div class="row" id="tweets">
 
+<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
+<body>
+    <div class="row">
+
+    <nav class="navbar navbar-default">
+		<div class="container-fluid">
+
+			<div>
+					<h2 class="text-center">Real-Time Tweet Analytics &nbsp;&nbsp;&nbsp;
+                        <a href="https://github.com/sheshnath08/Real-time-Tweet-Analytics" class="btn btn-default navbar-btn"><i class="fa fa-github" aria-hidden="true"></i>
+                            Github Repository
+                        </a>
+                    </h2>
+			</div>
+
+		</div>
+	</nav>
     </div>
 
-    <!--<div id="trending" class="row trending-body">-->
-        <!--<div class="panel panel-default">-->
-            <!--<div class="panel-body"> Trending Hashtags</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
-<div class="row">
+    <div class="container-fluid">
+            <div class="row" style="margin-top: 25px;">
+
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            #Tweets Analyzed
+                        </div>
+                        <div class="panel-body">
+                            <h2 class="announcement-heading" id = "count">200</h2>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            #Trending
+                        </div>
+                        <div class="panel-body">
+                            <div class="row text-center" id = 'trending'>
+                                <!--<p class="announcement-heading" id = "hashtag">100000</p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            Live Tweet Feeds
+                        </div>
+                        <div class="panel-body" id="tweets">
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
 
 
-<div class="col-md-3">
-	    <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="row text-center" id = 'trending'>
-                <!--<p class="announcement-heading" id = "hashtag">100000</p>-->
-            </div>
-          </div>
-          <a href="#">
-            <div class="panel-footer announcement-bottom">
-              <div class="row text-center">
-                  Trending Hashtags
-              </div>
-            </div>
-          </a>
-        </div>
-	</div>
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            #Sentiment Analysis
+                        </div>
+                        <div class="panel-body">
+                            <div class="row text-center">
+                                <h2> Coming Soon!!  Working on it...</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+           </div>
 
-	<!--<div class="col-md-6">-->
+    </div>
 
-	    <!--<h3>Live Tweet Feed</h3>-->
+      <div class="container-fluid footer">
+        <h4 class="text-center">Connect with me on
+            &nbsp;
+            <a href="https://www.linkedin.com/in/sheshnath08">
+                <i class="fa fa-linkedin-square fa-lg" aria-hidden="true"></i>
+            </a>
+            &nbsp;
+            <a href="http://github.com/sheshnath08/">
+                <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+            </a>
+            &nbsp;
+            <a href="https://fb.me/sheshnath08">
+                <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>
+            </a>
 
-	    <!--<table class="table table-condensed table-bordered table-hover small">-->
-            <!--<h2>Tweets Here</h2>-->
-	    <!--</table>-->
-
-    <!--</div>-->
-
-
-</div>
-
+</h4>
+      </div>
 </body>
+
+
 </html>

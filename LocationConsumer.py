@@ -2,7 +2,9 @@ import threading
 import requests
 from kafka import KafkaConsumer
 from keys import KAFKA_URL
+
 class LocationConsumer(threading.Thread):
+    '''[Working on it] This class is kafka-consumer to consume messages and plot it on map'''
 
     def run(self):
         while(True):

@@ -3,6 +3,7 @@ import traceback
 import tweepy
 from producer import Producer
 
+'''This class will start treaming tweets from twitter'''
 class TweetStream(tweepy.StreamListener):
     # Kafka producer
     producer = Producer()

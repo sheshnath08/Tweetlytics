@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real-Time Tweet Analytics</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+    </style>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on('connect', function() {
+                socket.emit('connected');
+            });
+
+    socket.on('newTweet', function(msg) {
+        console.log('tweet', msg);
+        $('#tweets').prepend('<div class="panel panel-default">' +
+                '<div class="panel-body">'+ msg +
+                '</div> </div>');
+        console.log(msg);
+    });
+
+    socket.on('tweetcount', function(msg) {
+        $('#count').html('<h2 class="announcement-text">'+ msg +
+                '</h2>');
+    });
+
+    socket.on('hashtags', function(msg) {
+        var JsonObject= JSON.parse(msg);
+        $('#trending').html('<div class="announcement-text" id="hashtag"></div>');
+
+        for(var key in JsonObject){
+            $('#hashtag').append('<h4>' +
+                key + ' '+ JsonObject[key]+
+                '</h4>');
+        };
+
+
+    });
+        function disconnect() {
+                        socket.emit('disconnected');
+        }
+    </script>
+
+</head>
+<body class="container" onunload=disconnect()>
+    <div class = "row">
+        <div class="col-md-6">
+                <h2>Real-Time Tweet Analytics</h2>
+        </div>
+        <div class="col-md-3">
+	    <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="row text-center">
+                <h2 class="announcement-heading" id = "count">200</h2>
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row text-center">
+                  Tweets Analyzed
+              </div>
+            </div>
+          </a>
+        </div>
+	</div>
+    </div>
+    <div class="row" id="tweets">
+
+    </div>
+
+    <!--<div id="trending" class="row trending-body">-->
+        <!--<div class="panel panel-default">-->
+            <!--<div class="panel-body"> Trending Hashtags</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<div class="row">
+
+
+<div class="col-md-3">
+	    <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row text-center" id = 'trending'>
+                <!--<p class="announcement-heading" id = "hashtag">100000</p>-->
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row text-center">
+                  Trending Hashtags
+              </div>
+            </div>
+          </a>
+        </div>
+	</div>
+
+
+	<!--<div class="col-md-6">-->
+
+	    <!--<h3>Live Tweet Feed</h3>-->
+
+	    <!--<table class="table table-condensed table-bordered table-hover small">-->
+            <!--<h2>Tweets Here</h2>-->
+	    <!--</table>-->
+
+    <!--</div>-->
+
+
+</div>
+
+</body>
+</html>

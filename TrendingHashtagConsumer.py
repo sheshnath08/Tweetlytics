@@ -3,7 +3,9 @@ import threading
 import requests
 from kafka import KafkaConsumer
 from keys import KAFKA_URL
+
 class TrendingHashtagConsumer(threading.Thread):
+    '''This class is responsible to consume message from kafka to find trending hashtags'''
 
     trend = {}
 
@@ -38,8 +40,11 @@ class TrendingHashtagConsumer(threading.Thread):
             top = sorted(self.trend.items(), key=lambda x:x[1], reverse=True)[:n]
         else:
             top = sorted(self.trend.items(), key=lambda x: x[1], reverse=True)
-
-        return top
+        new_data =[]
+        if(len(top)>0):
+            for item in top:
+                new_data.append({'key':item[0], 'value': item[1]})
+        return new_data
 
     def stop(self):
         self._stop_event.set()
