@@ -67,8 +67,11 @@ def connected():
 @application.route('/notify',methods=['POST'])
 def notify():
     """This will send the new tweets to """
-    data = str(request.get_data(), encoding='utf-8')
-    socketio.emit('newTweet',data)
+    try:
+        data = str(request.get_data(), encoding='utf-8')
+        socketio.emit('newTweet',data)
+    except:
+        print('error')
     return 'home'
 
 
