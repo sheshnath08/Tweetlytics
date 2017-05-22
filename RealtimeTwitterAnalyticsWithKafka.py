@@ -1,3 +1,4 @@
+import os
 from threading import Thread
 from flask import Flask, json
 from flask import render_template
@@ -100,4 +101,5 @@ def test_disconnect():
 
 
 if __name__ == '__main__':
-    socketio.run(application, port=8080)
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(application, host='0.0.0.0', port=port)
