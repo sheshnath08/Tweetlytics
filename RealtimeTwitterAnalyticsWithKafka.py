@@ -68,7 +68,7 @@ def connected():
 def notify():
     """This will send the new tweets to """
     try:
-        data = str(request.get_data(), encoding='utf-8')
+        data = request.get_data().decode()
         socketio.emit('newTweet',data)
     except:
         print('error')
@@ -77,20 +77,20 @@ def notify():
 
 @application.route('/tweet-count',methods=['POST'])
 def tweet_count():
-    data = str(request.get_data(), encoding='utf-8')
+    data = request.get_data().decode()
     socketio.emit('tweetcount',data)
     return 'home'
 
 @application.route('/trending-hashtag',methods=['POST'])
 def trend_count():
-    data = str(request.get_data(), encoding='utf-8')
+    data = request.get_data().decode()
     json_data = json.loads(data)
     socketio.emit('hashtags',json_data)
     return 'home'
 
 @application.route('/sentiment',methods=['POST'])
 def sentiment():
-    data = str(request.get_data(), encoding='utf-8')
+    data = request.get_data().decode()
     json_data = json.loads(data)
     socketio.emit('sentiment',json_data)
     return 'home'
