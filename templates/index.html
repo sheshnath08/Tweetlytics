@@ -19,10 +19,12 @@
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     socket.on('connect', function() {
+                console.log('connected');
                 socket.emit('connected');
             });
 
     socket.on('newTweet', function(msg) {
+        console.log(msg);
         $('#tweets').prepend(
                 '<div class="panel-body">'+ msg +
                 '</div>');
