@@ -4,3 +4,4 @@ TWITTER_CONSUMER_KEY = 'pLQUaemwKBgkWO90RTOiMOTdm'
 TWITTER_CONSUMER_SECRET = '511T8zbokdLculGZtbYpIyE1Y74XG5cobrFm4GP9vfufJXSqDP'
 
 KAFKA_URL = '52.87.152.11:9092'
+APP_URL = 'https://tweetlytics.herokuapp.com/'

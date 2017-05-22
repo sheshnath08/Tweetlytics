@@ -1,7 +1,7 @@
 import threading
 import requests
 from kafka import KafkaConsumer
-from keys import KAFKA_URL
+from keys import KAFKA_URL, APP_URL
 
 class Consumer(threading.Thread):
     '''This is kafka consumer to show tweets and count'''
@@ -14,8 +14,8 @@ class Consumer(threading.Thread):
         while(True):
             for message in consumer:
                 self.count = self.count+1
-                requests.post('http://localhost:5000/tweet-count', data=str(self.count))#message.value)
-                requests.post('http://localhost:5000/notify', message.value)
+                requests.post(APP_URL+'tweet-count', data=str(self.count))#message.value)
+                requests.post(APP_URL+'notify', message.value)
 
     def stop(self):
         self._stop_event.set()
@@ -30,8 +30,8 @@ class SentimentConsumer(threading.Thread):
         while(True):
             for message in consumer:
                 self.count = self.count+1
-                requests.post('http://localhost:5000/tweet-count', data=str(self.count))#message.value)
-                requests.post('http://localhost:5000/notify', message.value)
+                requests.post(APP_URL+'tweet-count', data=str(self.count))#message.value)
+                requests.post(APP_URL+'notify', message.value)
 
     def stop(self):
         self._stop_event.set()

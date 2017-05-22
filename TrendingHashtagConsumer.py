@@ -2,7 +2,8 @@ import json
 import threading
 import requests
 from kafka import KafkaConsumer
-from keys import KAFKA_URL
+from keys import KAFKA_URL, APP_URL
+
 
 class TrendingHashtagConsumer(threading.Thread):
     '''This class is responsible to consume message from kafka to find trending hashtags'''
@@ -19,7 +20,7 @@ class TrendingHashtagConsumer(threading.Thread):
                 hastag = self.extract_hash_tags(tweet)
                 self.update_trend(hastag)
                 top_10 = self.getTopNhashags(10)
-                requests.post('http://localhost:5000/trending-hashtag', json = json.dumps(top_10))
+                requests.post(APP_URL+'trending-hashtag', json = json.dumps(top_10))
 
     def extract_hash_tags(self, s):
         s = s.lower()
