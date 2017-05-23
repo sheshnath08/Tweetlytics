@@ -8,35 +8,7 @@ from keys import KAFKA_URL, APP_URL
 class TrendingHashtagConsumer(threading.Thread):
     '''This class is responsible to consume message from kafka to find trending hashtags'''
 
-    trend = {}
 
-    def extract_hash_tags(self, s):
-        s = s.lower()
-        return set(part[1:] for part in s.split() if part.startswith('#'))
-
-    def update_trend(self, hashtag):
-        keys = self.trend.keys()
-        for item in hashtag:
-            if (len(item) < 3):
-                continue
-            if item in keys:
-                self.trend[item] = self.trend[item] + 1
-            else:
-                self.trend[item] = 1
-
-    def getTopNhashags(self, n):
-        if (len(self.trend) >= n):
-            top = sorted(self.trend.items(), key=lambda x: x[1], reverse=True)[:n]
-        else:
-            top = sorted(self.trend.items(), key=lambda x: x[1], reverse=True)
-        new_data = []
-        if (len(top) > 0):
-            for item in top:
-                new_data.append({'key': item[0], 'value': item[1]})
-        return new_data
-
-    def stop(self):
-        self._stop_event.set()
 
     def run(self):
         consumer = KafkaConsumer(bootstrap_servers=[KAFKA_URL], api_version=(0, 10),
