@@ -49,7 +49,7 @@ class Consumer(threading.Thread):
                 requests.post(APP_URL+'tweet-count', data=str(self.count))#message.value)
                 requests.post(APP_URL+'notify', message.value)
 
-                tweet = str(message.value, encoding='utf-8')
+                tweet = str(message.value).encode()
                 hastag = self.extract_hash_tags(tweet)
                 self.update_trend(hastag)
                 top_10 = self.getTopNhashags(10)
