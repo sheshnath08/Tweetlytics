@@ -37,7 +37,7 @@
     socket.on('hashtags', function(msg) {
         var JsonObject= JSON.parse(msg);
         console.log(msg);
-        $('#trending').prepend('<div class="announcement-text" id="hashtag"></div>');
+        $('#trending').html('<div class="announcement-text" id="hashtag"></div>');
 
         for(var key in JsonObject){
             $('#hashtag').append('<h4>' +
@@ -47,6 +47,13 @@
 
 
     });
+
+    socket.on('sentiment', function(msg) {
+        var JsonObject= JSON.parse(msg);
+        console.log(msg);
+        $('#sentiment').html('<div class="announcement-text"> Hastag update </div>');
+    });
+
         function disconnect() {
                         socket.emit('disconnected');
         }
@@ -118,7 +125,7 @@
                             #Sentiment Analysis
                         </div>
                         <div class="panel-body">
-                            <div class="row text-center">
+                            <div class="row text-center" id="sentiment">
                                 <h2> Coming Soon!!  Working on it...</h2>
                             </div>
                         </div>

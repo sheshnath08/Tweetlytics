@@ -85,7 +85,7 @@ def tweet_count():
 def trend_count():
     data = request.get_data().decode()
     json_data = json.loads(data)
-    socketio.emit('hashtags',json_data)
+    socketio.emit('sentiment',json_data)
     return 'home'
 
 @application.route('/sentiment',methods=['POST'])
