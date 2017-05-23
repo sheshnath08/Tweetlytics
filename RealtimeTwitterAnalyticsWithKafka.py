@@ -44,10 +44,10 @@ def start_stop_consumer(flag):
     consumer1 = Consumer()
     if flag:
         consumer.start()
-        # consumer1.start()
+        consumer1.start()
     else:
         consumer.stop()
-        # consumer1.stop()
+        consumer1.stop()
 
 
 @application.route('/', methods=['GET'])
@@ -96,11 +96,6 @@ def sentiment():
     return 'home'
 
 
-
-@socketio.on('disconnected', namespace='/')
-def test_disconnect():
-    start_stop_consumer(False)
-    print('Client disconnected', request.sid)
 
 
 if __name__ == '__main__':
