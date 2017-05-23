@@ -1,20 +1,23 @@
 # Tweetlytics
 **Real-Time Tweet Analytics With Apache-Kafka and python**
 
+
+## Demo
+[Tweetlytics Deployed on Heroku](http://tweetlytics.herokuapp.com/)
+
 ## Retrieve code
 
 * `$ git clone https://github.com/sheshnath08/Tweetlytics.git`
 * `$ cd Tweetlytics`
-
 
 ## Major Dependensies
 
 **The project uses [Tweepy](http://www.tweepy.org/) library to get tweets from twitter, [Apache-Kafka](https://kafka.apache.org/) as a messaging queue, [Flask](http://flask.pocoo.org/) as Back-end Server and [Socket-IO](https://socket.io/) to update front-end in Real-Time** 
 
 ## Architecture and Dataflow
-![Architecture Image](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![Architecture Image](https://raw.githubusercontent.com/sheshnath08/Tweetlytics/master/architecture/architecture.png)
 
-##Running
+## Running
 
 * First, you will need to setup kafka, follow this tutorial by [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-apache-kafka-on-ubuntu-14-04)
 
