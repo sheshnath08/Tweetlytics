@@ -16,6 +16,7 @@ class Consumer(threading.Thread):
                 self.count = self.count+1
                 requests.post(APP_URL+'tweet-count', data=str(self.count))#message.value)
                 requests.post(APP_URL+'notify', message.value)
+                requests.post(APP_URL+'trending-hashtag', message)
 
     def stop(self):
         self._stop_event.set()
