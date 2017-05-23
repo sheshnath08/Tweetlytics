@@ -43,10 +43,10 @@ def start_stop_consumer(flag):
     consumer = TrendingHashtagConsumer()
     consumer1 = Consumer()
     if flag:
-        consumer.start()
+        # consumer.start()
         consumer1.start()
     else:
-        consumer.stop()
+        # consumer.stop()
         consumer1.stop()
 
 
