@@ -37,7 +37,7 @@
     socket.on('hashtags', function(msg) {
         var JsonObject= JSON.parse(msg);
         console.log(msg);
-        $('#trending').html('<div class="announcement-text" id="hashtag"></div>');
+        $('#trending').prepend('<div class="announcement-text" id="hashtag"></div>');
 
         for(var key in JsonObject){
             $('#hashtag').append('<h4>' +
