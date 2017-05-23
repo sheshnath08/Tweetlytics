@@ -11,11 +11,13 @@ class TrendingHashtagConsumer(threading.Thread):
     trend = {}
 
     def run(self):
+        print('Trending Consumer started')
         consumer = KafkaConsumer(bootstrap_servers=[KAFKA_URL], api_version=(0,10),
                                  auto_offset_reset='earliest', enable_auto_commit=False, consumer_timeout_ms=60000)
         consumer.subscribe(['newtweet'])
         while(True):
             for message in consumer:
+                print('Trending Consumer working')
                 tweet = str(message.value, encoding='utf-8')
                 hastag = self.extract_hash_tags(tweet)
                 self.update_trend(hastag)
