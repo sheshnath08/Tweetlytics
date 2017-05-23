@@ -36,7 +36,6 @@
 
     socket.on('hashtags', function(msg) {
         var JsonObject= JSON.parse(msg);
-        console.log(msg);
         $('#trending').html('<div class="announcement-text" id="hashtag"></div>');
 
         for(var key in JsonObject){
@@ -50,7 +49,6 @@
 
     socket.on('sentiment', function(msg) {
         var JsonObject= JSON.parse(msg);
-        console.log(msg);
         $('#sentiment').html('<div class="announcement-text"> Hastag update </div>');
     });
 
